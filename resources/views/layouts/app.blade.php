@@ -30,7 +30,7 @@
                     <th scope="col">Orario di Partenza</th>
                     <th scope="col">Orario di arrivo</th>
                     <th scope="col">Codice treno</th>
-                    <th scope="col">Totale carozze</th>
+                    <th scope="col">Totale carrozze</th>
                     <th scope="col">In orario?</th>
                     <th scope="col">Ritardo</th>
                     <th scope="col">Cancellato</th>
@@ -46,16 +46,25 @@
                         <td class="table-success">{{ $train['orario_di_arrivo'] }}</td>
                         <td class="table-success">{{ $train['totale_carozze'] }}</td>
                         <td class="table-success">{{ $train['codice_treno'] }}</td>
+                        {{-- È in orario? --}}
                         <td
-                            class="{{ $train['ritardo'] == 0 || $train['ritardo'] == null ? 'text-success table-success' : 'text-danger table-danger' }}">
-                            {{ $train['è_in_orario?'] == 1 ? 'Sì' : 'No' }}
+                            class="{{ $train->è_cancellato || $train->ritardo > 0 ? 'text-danger table-danger' : 'text-success table-success' }}">
+                            {{ $train->è_cancellato || $train->ritardo > 0 ? 'No' : 'Sì' }}
                         </td>
-                        <td class="{{ $train['ritardo'] > 0 ? 'text-danger table-danger' : 'table-warning' }}">
-                            {{ $train['ritardo'] }}
+
+                        {{-- Ritardo --}}
+                        <td
+                            class="{{ $train->ritardo > 0 && !$train->è_cancellato ? 'table-warning' : 'text-success table-success' }}">
+                            {{ $train->è_cancellato ? '-' : ($train->ritardo > 0 ? $train->ritardo . ' min' : 'Nessun ritardo') }}
                         </td>
-                        <td class="{{ $train['è_cancellato?'] ? 'text-danger table-danger' : 'table-success' }}">
-                            {{ $train['è_cancellato?'] ? 'Cancellato' : '' }}
+
+                        {{-- Cancellato --}}
+                        <td class="{{ $train->è_cancellato ? 'text-danger table-danger' : 'table-success' }}">
+                            {{ $train->è_cancellato ? 'Cancellato' : '' }}
                         </td>
+
+
+
 
                     </tr>
                 @endforeach
