@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Trains')</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -58,13 +57,10 @@
                             {{ $train->è_cancellato ? '-' : ($train->ritardo > 0 ? $train->ritardo . ' min' : 'Nessun ritardo') }}
                         </td>
 
-                        {{-- Cancellato --}}
+                        {{-- Cancellato? --}}
                         <td class="{{ $train->è_cancellato ? 'text-danger table-danger' : 'table-success' }}">
                             {{ $train->è_cancellato ? 'Cancellato' : '' }}
                         </td>
-
-
-
 
                     </tr>
                 @endforeach
